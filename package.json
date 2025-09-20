@@ -25,6 +25,10 @@
   ],
   "author": "Anderson Correa",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andersonfpcorrea/cdk-init.git"
+  },
   "dependencies": {
     "execa": "^9.6.0",
     "fs-extra": "^11.3.2",
