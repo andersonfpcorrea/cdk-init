@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && vitest run"
+    "test": "npm run build && vitest run",
+    "prepare": "node .husky/install.mjs"
   },
   "keywords": [
     "cdk",
@@ -28,6 +29,8 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.6",
@@ -36,6 +39,8 @@
     "@types/inquirer": "^9.0.9",
     "@types/node": "^24.5.2",
     "@types/yargs": "^17.0.33",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
     "semantic-release": "^24.2.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
