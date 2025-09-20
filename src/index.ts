@@ -21,7 +21,7 @@ async function getAvailableTemplates(): Promise<AvailableTemplates> {
     if ((await fs.stat(langPath)).isDirectory()) {
       const templates = await fs.readdir(langPath);
       available[lang] = templates.filter(async (t) =>
-        (await fs.stat(path.join(langPath, t))).isDirectory()
+        (await fs.stat(path.join(langPath, t))).isDirectory(),
       );
     }
   }
@@ -79,6 +79,12 @@ const main = async () => {
       message: "What is your AWS dev profile name?",
       default: "default",
     },
+    {
+      type: "confirm",
+      name: "initGit",
+      message: "Initiate Git repository?",
+      default: true,
+    },
   ]);
 
   const targetDir = path.join(process.cwd(), serviceName);
@@ -92,8 +98,8 @@ const main = async () => {
   if (!availableTemplates[language]) {
     spinner.fail(
       `Language "${language}" not found. Available languages: ${Object.keys(
-        availableTemplates
-      ).join(", ")}`
+        availableTemplates,
+      ).join(", ")}`,
     );
     process.exit(1);
   }
@@ -102,7 +108,7 @@ const main = async () => {
     spinner.fail(
       `Template "${templateName}" not found for language "${language}". Available templates: ${availableTemplates[
         language
-      ].join(", ")}`
+      ].join(", ")}`,
     );
     process.exit(1);
   }
@@ -112,7 +118,7 @@ const main = async () => {
   // 1. Validate template existence
   if (!fs.existsSync(templateDir)) {
     spinner.fail(
-      `Template "${templateName}" for language "${language}" not found.`
+      `Template "${templateName}" for language "${language}" not found.`,
     );
     console.error(`Looked in: ${templateDir}`);
     process.exit(1);
@@ -171,13 +177,15 @@ const main = async () => {
   spinner.succeed("Project files updated successfully.");
 
   // 5. Initialize Git
-  spinner.text = "Initializing Git repository...";
-  try {
-    await execa("git", ["init"], { cwd: targetDir });
-    spinner.succeed("Git repository initialized successfully.");
-  } catch (err) {
-    spinner.warn("Could not initialize Git repository.");
-    // We don't exit here, as git initialization is not critical
+  if (answers.initGit) {
+    spinner.text = "Initializing Git repository...";
+    try {
+      await execa("git", ["init"], { cwd: targetDir });
+      spinner.succeed("Git repository initialized successfully.");
+    } catch (err) {
+      spinner.warn("Could not initialize Git repository.");
+      // We don't exit here, as git initialization is not critical
+    }
   }
 
   // 6. Install dependencies
@@ -189,6 +197,20 @@ const main = async () => {
     spinner.fail("Error installing dependencies.");
     console.error(err);
     process.exit(1);
+  }
+
+  // 7. Initial Commit (if Git was initialized)
+  if (answers.initGit) {
+    spinner.text = "Creating initial commit...";
+    try {
+      await execa("git", ["add", "."], { cwd: targetDir });
+      await execa("git", ["commit", "-m", "initial commit"], {
+        cwd: targetDir,
+      });
+      spinner.succeed("Initial commit created successfully.");
+    } catch (err) {
+      spinner.warn("Could not create initial commit.");
+    }
   }
 
   spinner.succeed(`Success! Your new CDK app is ready in ${targetDir}`);
