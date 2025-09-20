@@ -25,6 +25,7 @@ export default defineConfig({
     alias: {
       "@infra": path.resolve(__dirname, "./infra"),
       "@src": path.resolve(__dirname, "./src"),
+      "@utils": path.resolve(__dirname, "./utils"),
     },
   },
 });

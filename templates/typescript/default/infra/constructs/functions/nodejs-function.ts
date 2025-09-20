@@ -6,6 +6,7 @@ import type { EnvironmentName, LambdaCommonConfig } from "@infra/config";
 import { COMMIT_HASH, ENV_NAME } from "@utils/constants";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction as CDKNodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
 
 interface NodejsFunctionProps {
@@ -34,19 +35,36 @@ interface NodejsFunctionProps {
 export class NodejsFunction extends Construct {
   public readonly lambda: CDKNodejsFunction;
 
-  constructor(scope: Construct, id: string, props: NodejsFunctionProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    {
+      envName,
+      handlerDirName,
+      lambdaConfig,
+      environmentVariables,
+    }: NodejsFunctionProps,
+  ) {
     super(scope, id);
-    const dirName = validateHandlerDir(props.handlerDirName);
+    const dirName = validateHandlerDir(handlerDirName);
     this.lambda = new CDKNodejsFunction(this, `NodejsFunction-${id}`, {
       runtime: Runtime.NODEJS_22_X,
       entry: path.join(__dirname, `../../../src/lambdas/${dirName}/handler.ts`),
       handler: "handler",
-      ...props.lambdaConfig,
+      logGroup: new LogGroup(
+        this,
+        `LogGroup-${id}`,
+        lambdaConfig.logGroupProps,
+      ),
+      memorySize: lambdaConfig.memorySize,
+      timeout: lambdaConfig.timeout,
+      tracing: lambdaConfig.tracing,
+      functionName: lambdaConfig.functionName,
       environment: {
-        [ENV_NAME]: props.envName,
+        [ENV_NAME]: envName,
         // commit-has is used in aws powertools logger
         [COMMIT_HASH]: execSync("git rev-parse HEAD").toString().trim(),
-        ...props.environmentVariables,
+        ...environmentVariables,
       },
       bundling: {
         externalModules: [],

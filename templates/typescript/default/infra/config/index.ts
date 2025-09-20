@@ -3,7 +3,7 @@ import * as cdk from "aws-cdk-lib";
 export type EnvironmentName = "dev" | "preprod" | "prod";
 
 export interface LambdaCommonConfig {
-  logRetention: cdk.aws_logs.RetentionDays;
+  logGroupProps: cdk.aws_logs.LogGroupProps;
   memorySize: number;
   timeout: cdk.Duration;
   tracing: cdk.aws_lambda.Tracing;
@@ -53,7 +53,7 @@ export const environmentConfig: Partial<
     },
     customersEndpoint: {
       postCustomerLambda: {
-        logRetention: cdk.aws_logs.RetentionDays.ONE_WEEK,
+        logGroupProps: { retention: cdk.aws_logs.RetentionDays.ONE_WEEK },
         memorySize: 256,
         timeout: cdk.Duration.seconds(30),
         tracing: cdk.aws_lambda.Tracing.ACTIVE,
