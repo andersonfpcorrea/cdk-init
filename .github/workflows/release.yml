@@ -7,20 +7,53 @@ on:
 
 permissions:
   id-token: write # Required for OIDC
-  contents: read
+  contents: write # Required for semantic-release to push changes (package.json, CHANGELOG.md)
 
 jobs:
-  publish:
+  version:
+    name: Versioning and GitHub Release
     runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic_release.outputs.new_release_published }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for semantic-release to analyze all history
+          ref: master # Ensure we are on the master branch to push changes
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm clean-install
+
+      - name: Run Semantic Release
+        id: semantic_release # Add an ID to this step to access its outputs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed by semantic-release for GitHub interactions
+        run: npm run release
+
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: version # This job runs after the 'version' job completes
+    if: ${{ needs.version.outputs.new_release_published == 'true' }} # Only run publish if a new release was published by SR
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+        with:
+          ref: master # Checkout the master branch to get the updated package.json
+          fetch-depth: 0 # Ensure full history for npm ci/build if needed
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      # Ensure npm 11.5.1 or later is installed
       - name: Update npm
         run: npm install -g npm@latest
       - run: npm ci
