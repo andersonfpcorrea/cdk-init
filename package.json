@@ -7,10 +7,13 @@
   "bin": {
     "cdk-init": "bin/cli.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && vitest run",
+    "test": "vitest run",
     "prepare": "node .husky/install.mjs"
   },
   "keywords": [

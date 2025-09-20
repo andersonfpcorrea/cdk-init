@@ -5,33 +5,25 @@ on:
     branches:
       - master
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
-  release:
-    name: Release
+  publish:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for OIDC
-      contents: write # Required for semantic-release to create releases and update package.json/CHANGELOG.md
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0 # Required for semantic-release to analyze all history
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: "https://registry.npmjs.org/"
-          scope: "@andersonfpcorrea" # Your npm scope
-
-      - name: Install dependencies
-        run: npm clean-install
-
-      - name: Release
-        permissions:
-          id-token: write # This is required for OIDC
-          contents: write # This is required for semantic-release to push tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run release
+      # Ensure npm 11.5.1 or later is installed
+      - name: Update npm
+        run: npm install -g npm@latest
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+      - run: npm publish
