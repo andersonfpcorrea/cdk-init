@@ -101,7 +101,7 @@ const main = async () => {
   // 4. Replace placeholders
   spinner.text = "Updating project files...";
   const replacements = {
-    "{{SERVICE_NAME}}": answers.serviceName,
+    "{{SERVICE_NAME}}": serviceName,
     "{{PROJECT_NAMESPACE}}": answers.projectNamespace,
     "{{AWS_DEV_ACCOUNT}}": answers.awsDevAccount,
     "{{AWS_DEV_REGION}}": answers.awsDevRegion,
