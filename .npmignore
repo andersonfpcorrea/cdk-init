@@ -1,0 +1,11 @@
+# Exclude development and CI/CD related files
+.github/
+.husky/
+.lintstagedrc
+.releaserc.json
+commitlint.config.mjs
+/src/
+/tests/
+tsconfig.json
+vitest.config.ts
+node_modules

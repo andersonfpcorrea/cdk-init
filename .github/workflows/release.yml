@@ -28,7 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
 
-      - name: Run Semantic Release
-        run: npx semantic-release
+      - name: Release
+        permissions:
+          id-token: write # This is required for OIDC
+          contents: write # This is required for semantic-release to push tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release
