@@ -11,8 +11,8 @@ import {
 } from "@utils/constants";
 
 const defaultValues = {
-  awsAccount: environmentConfig.dev?.awsEnvironment.account ?? "",
-  awsRegion: environmentConfig.dev?.awsEnvironment.region ?? "",
+  awsAccount: environmentConfig.Dev?.awsEnvironment.account ?? "",
+  awsRegion: environmentConfig.Dev?.awsEnvironment.region ?? "",
   environment: process.env?.[ENV_NAME] ?? "",
 };
 

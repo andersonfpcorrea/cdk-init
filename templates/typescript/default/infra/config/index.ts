@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 
-export type EnvironmentName = "dev" | "preprod" | "prod";
+export type EnvironmentName = "Dev" | "PreProd";
 
 export interface LambdaCommonConfig {
   logGroupProps: cdk.aws_logs.LogGroupProps;
@@ -37,8 +37,12 @@ export interface EnvironmentConfig {
 export const environmentConfig: Partial<
   Record<EnvironmentName, EnvironmentConfig>
 > = {
-  dev: {
-    awsEnvironment: { account: "", region: "", profile: "" },
+  Dev: {
+    awsEnvironment: {
+      account: "{{AWS_DEV_ACCOUNT}}",
+      region: "{{AWS_DEV_REGION}}",
+      profile: "{{PROFILE}}",
+    },
     waf: { rateLimit: 60, evaluationWindowSec: 60, scope: "REGIONAL" },
     apiGateway: {
       corsOptionsMaxAge: cdk.Duration.days(1),

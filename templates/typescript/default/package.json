@@ -1,5 +1,5 @@
 {
-  "name": "default",
+  "name": "{{SERVICE_NAME}}",
   "version": "0.1.0",
   "bin": {
     "default": "infra/bin/app.js"
@@ -15,10 +15,10 @@
     "export-env": "sh utils/export-env.sh",
     "diff": "cdk diff --profile {{PROFILE}}",
     "synth": "cdk synth --profile {{PROFILE}}",
-    "deploy:dev": "cdk deploy --context stageName=Dev Dev/SnappiCollect-Stack --profile {{PROFILE}}",
-    "deploy:dev:hs": "cdk deploy --context stageName=Dev Dev/SnappiCollect-Stack --profile {{PROFILE}} --hotswap",
-    "destroy:dev": "cdk destroy --context stageName=Dev Staging/SnappiCollect-Stack --profile {{PROFILE}}",
-    "deploy:preprod": "cdk deploy --context stageName=Dev PreProd/SnappiCollect-Stack --profile {{PROFILE}}"
+    "deploy:dev": "cdk deploy --context stageName=dev dev/{{SERVICE_NAME}}-Stack --profile {{PROFILE}}",
+    "deploy:dev:hs": "cdk deploy --context stageName=dev dev/{{SERVICE_NAME}}-Stack --profile {{PROFILE}} --hotswap",
+    "destroy:dev": "cdk destroy --context stageName=dev Staging/{{SERVICE_NAME}}-Stack --profile {{PROFILE}}",
+    "deploy:preprod": "cdk deploy --context stageName=preprod preprod/{{SERVICE_NAME}}-Stack --profile {{PROFILE}}"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
