@@ -6,6 +6,28 @@ import inquirer from "inquirer";
 import ora from "ora";
 import { execa } from "execa";
 
+const templatesRoot = path.join(__dirname, "../templates");
+
+interface AvailableTemplates {
+  [language: string]: string[];
+}
+
+async function getAvailableTemplates(): Promise<AvailableTemplates> {
+  const available: AvailableTemplates = {};
+  const languages = await fs.readdir(templatesRoot);
+
+  for (const lang of languages) {
+    const langPath = path.join(templatesRoot, lang);
+    if ((await fs.stat(langPath)).isDirectory()) {
+      const templates = await fs.readdir(langPath);
+      available[lang] = templates.filter(async (t) =>
+        (await fs.stat(path.join(langPath, t))).isDirectory()
+      );
+    }
+  }
+  return available;
+}
+
 const main = async () => {
   const argv = await yargs(hideBin(process.argv))
     .options({
@@ -63,14 +85,29 @@ const main = async () => {
   const templateName = argv.template;
   const language = argv.language;
 
-  const templateDir = path.join(
-    __dirname,
-    "../templates",
-    language,
-    templateName
-  );
-
   const spinner = ora(`Creating a new CDK app in ${targetDir}...`).start();
+
+  const availableTemplates = await getAvailableTemplates();
+
+  if (!availableTemplates[language]) {
+    spinner.fail(
+      `Language "${language}" not found. Available languages: ${Object.keys(
+        availableTemplates
+      ).join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  if (!availableTemplates[language].includes(templateName)) {
+    spinner.fail(
+      `Template "${templateName}" not found for language "${language}". Available templates: ${availableTemplates[
+        language
+      ].join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  const templateDir = path.join(templatesRoot, language, templateName);
 
   // 1. Validate template existence
   if (!fs.existsSync(templateDir)) {
