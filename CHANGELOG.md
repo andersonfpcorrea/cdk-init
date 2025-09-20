@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.0.0...v1.1.0) (2025-09-20)
+
+
+### Features
+
+* adjust release action ([#3](https://github.com/andersonfpcorrea/cdk-init/issues/3)) ([3aea933](https://github.com/andersonfpcorrea/cdk-init/commit/3aea93344bde35ef9c3511f3a012075096420c05))
+
 # 1.0.0 (2025-09-20)
 
 
