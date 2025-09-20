@@ -16,24 +16,25 @@ describe("CLI E2E Test", { timeout: 40_000 }, () => {
   });
 
   it("should create a new project", async () => {
-    const serviceName = "service";
+    const serviceName = `my-test-project-${Date.now()}`;
     const projectPath = path.join(tempDir, serviceName);
 
     const inputs = [
-      { key: "Enter", value: serviceName }, // serviceName
-      { key: "Enter", value: `${serviceName}-organization` }, // projectNamespace
-      { key: "Enter", value: "123456789012" }, // awsDevAccount
-      { key: "Enter", value: "us-east-1" }, // awsDevRegion
-      { key: "Enter", value: "default" }, // awsDevProfile
+      serviceName, // serviceName
+      `${serviceName}-organization`, // projectNamespace
+      "123456789012", // awsDevAccount
+      "us-east-1", // awsDevRegion
+      "default", // awsDevProfile
     ];
 
-    const childProcess = execa("node", [cliPath, serviceName], {
+    const childProcess = execa("node", [cliPath], {
       cwd: tempDir,
+      stdio: ["pipe", "inherit", "inherit"],
     });
 
     for (const input of inputs) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      childProcess.stdin.write(input.key === "Enter" ? "\n" : input.value);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      childProcess.stdin.write(input + "\n");
     }
 
     const result = await childProcess;
