@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.2.0...v1.3.0) (2025-09-20)
+
+
+### Features
+
+* add git-init option to cli ([913c1a9](https://github.com/andersonfpcorrea/cdk-init/commit/913c1a94618de2ff68a4853a9a099f3ce3b34788))
+* update release-action to dep on redundant test setup ([2f02dcf](https://github.com/andersonfpcorrea/cdk-init/commit/2f02dcf7a0c5e7b278dc53addc0e29683c887189))
+* update release-action to remove redundant test setup ([5dbaf5c](https://github.com/andersonfpcorrea/cdk-init/commit/5dbaf5ce3e9e85d381ef641a9fcbf9ac69cde4b0))
+
 # [1.2.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.1.0...v1.2.0) (2025-09-20)
 
 
