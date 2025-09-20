@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.1.0...v1.2.0) (2025-09-20)
+
+
+### Features
+
+* add registry-url to package.json ([4821070](https://github.com/andersonfpcorrea/cdk-init/commit/4821070710ba2ce8a61b1320d2e8c2eec060c2ab))
+* update release action ([effa1e3](https://github.com/andersonfpcorrea/cdk-init/commit/effa1e30e39d606ff76aa96fc344fd384859c875))
+* update test job on release action ([fded472](https://github.com/andersonfpcorrea/cdk-init/commit/fded47201b8b1e708e0372ab83226583330021f9))
+
 # [1.1.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.0.0...v1.1.0) (2025-09-20)
 
 
