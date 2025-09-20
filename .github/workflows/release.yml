@@ -26,7 +26,7 @@ jobs:
         run: npm clean-install
 
       - name: Run tests
-        run: npm test
+        run: npm run build && npm test
 
   version:
     name: Versioning and GitHub Release
