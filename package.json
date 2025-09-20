@@ -1,0 +1,34 @@
+{
+  "name": "@andersonfpcorrea/cdk-init",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A bootstrap CLI for creating opinionated AWS CDK apps.",
+  "main": "dist/index.js",
+  "bin": {
+    "cdk-init": "bin/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cdk",
+    "aws",
+    "scaffolding",
+    "bootstrap"
+  ],
+  "author": "Anderson Correa",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.0.0",
+    "yargs": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.0",
+    "@types/inquirer": "^8.0.0",
+    "@types/node": "^18.0.0",
+    "@types/yargs": "^17.0.0",
+    "typescript": "^4.8.0"
+  }
+}

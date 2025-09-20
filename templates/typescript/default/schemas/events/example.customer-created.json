@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "CustomerCreatedEvent",
+  "version": "1.0.0",
+  "description": "Event emitted when a customer is created in the system",
+  "type": "object",
+  "required": ["metadata", "data"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["id", "version", "timestamp", "domain", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ULID for easier time-based sorting"
+        },
+        "version": {
+          "type": "string",
+          "description": "Schema version for breaking changes"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of event generation"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Domain identifier",
+          "enum": ["customers-service"]
+        },
+        "type": {
+          "type": "string",
+          "description": "Event type identifier",
+          "enum": ["customer-created"]
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Customer's name"
+        }
+      }
+    }
+  }
+}
