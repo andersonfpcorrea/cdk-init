@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.3.0...v1.4.0) (2025-09-21)
+
+
+### Features
+
+* remove extraneous file from ts default template ([fcb7d04](https://github.com/andersonfpcorrea/cdk-init/commit/fcb7d04226f43f9391a2c9adb86cf0a2079035ff))
+
 # [1.3.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.2.0...v1.3.0) (2025-09-20)
 
 

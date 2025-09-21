@@ -1,6 +1,6 @@
 {
   "name": "@andersonfpcorrea/cdk-init",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "private": false,
   "description": "A bootstrap CLI for creating opinionated AWS CDK apps.",
   "main": ".dist/index.js",
