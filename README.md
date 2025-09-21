@@ -1,6 +1,6 @@
 # @andersonfpcorrea/cdk-init
 
-An opinionated CLI for bootstrapping AWS CDK applications with focus on best practices and developer experience.
+A CLI for bootstrapping AWS CDK applications with focus on best practices and developer experience.
 
 ## Features
 
