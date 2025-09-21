@@ -65,9 +65,6 @@ describe("CLI E2E Test", { timeout: 40_000 }, () => {
       // Check if template placeholders were updated correctly
       const pkgJson = await fs.readJson(path.join(projectPath, "package.json"));
       expect(pkgJson.name).toBe(serviceName);
-      // The original test had an assertion for pkgJson.scripts["deploy:dev"].toContain(serviceName);
-      // This script might not exist in the template's package.json or might not be relevant for all templates.
-      // Keeping it commented out for now, can be re-added if confirmed necessary.
 
       const constantsContent = await fs.readFile(
         path.join(projectPath, "utils/constants.ts"),
