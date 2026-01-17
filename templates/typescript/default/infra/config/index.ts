@@ -1,37 +1,19 @@
-import * as cdk from "aws-cdk-lib";
+import type { Duration } from "aws-cdk-lib";
+import type { Tracing } from "aws-cdk-lib/aws-lambda";
+import type { LogGroupProps } from "aws-cdk-lib/aws-logs";
 
-export type EnvironmentName = "Dev" | "PreProd";
+export type EnvironmentName = "Dev" | "PreProd" | "Prod";
 
 export interface LambdaCommonConfig {
-  logGroupProps: cdk.aws_logs.LogGroupProps;
+  logGroupProps: LogGroupProps;
   memorySize: number;
-  timeout: cdk.Duration;
-  tracing: cdk.aws_lambda.Tracing;
+  timeout: Duration;
+  tracing: Tracing;
   functionName?: string;
 }
 
 export interface EnvironmentConfig {
   awsEnvironment: { account: string; region: string; profile: string };
-  waf: {
-    rateLimit: number;
-    evaluationWindowSec: 60 | 120 | 300 | 600;
-    scope: "CLOUDFRONT" | "REGIONAL";
-  };
-  apiGateway: {
-    corsOptionsMaxAge: cdk.Duration;
-    stageName: string;
-    description: string;
-  };
-  route53: {
-    domainName: string;
-    hostedZoneId: string;
-    zoneName: string;
-    recordName: string;
-    certificateArn?: string;
-  };
-  customersEndpoint: {
-    postCustomerLambda: LambdaCommonConfig;
-  };
 }
 
 export const environmentConfig: Partial<
@@ -42,27 +24,6 @@ export const environmentConfig: Partial<
       account: "{{AWS_DEV_ACCOUNT}}",
       region: "{{AWS_DEV_REGION}}",
       profile: "{{PROFILE}}",
-    },
-    waf: { rateLimit: 60, evaluationWindowSec: 60, scope: "REGIONAL" },
-    apiGateway: {
-      corsOptionsMaxAge: cdk.Duration.days(1),
-      stageName: "v1",
-      description: "API gateway for my app (dev)",
-    },
-    route53: {
-      domainName: "",
-      hostedZoneId: "", // "ASHDH234...",
-      zoneName: "", // "domain.com"
-      recordName: "", // "subdomain.dev"
-    },
-    customersEndpoint: {
-      postCustomerLambda: {
-        logGroupProps: { retention: cdk.aws_logs.RetentionDays.ONE_WEEK },
-        memorySize: 256,
-        timeout: cdk.Duration.seconds(30),
-        tracing: cdk.aws_lambda.Tracing.ACTIVE,
-        functionName: "PostCustomersLambda",
-      },
     },
   },
 };
