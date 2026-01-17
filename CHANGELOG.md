@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.4.0...v1.5.0) (2025-10-10)
+
+
+### Features
+
+* merge branch 'master' of github.com:andersonfpcorrea/cdk-init ([ad6aaf0](https://github.com/andersonfpcorrea/cdk-init/commit/ad6aaf00496098bf62166df424410e251e261572))
+* update license ([34f3e0c](https://github.com/andersonfpcorrea/cdk-init/commit/34f3e0c73f79df9928bedd4be01fec2b5b963fb1))
+
 # [1.4.0](https://github.com/andersonfpcorrea/cdk-init/compare/v1.3.0...v1.4.0) (2025-09-21)
 
 
