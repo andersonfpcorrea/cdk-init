@@ -50,10 +50,10 @@
     "@aws-sdk/lib-dynamodb": "^3.971.0",
     "@matthewbonig/cdk-logical-id-mapper": "^0.0.2",
     "@middy/core": "^7.0.2",
-    "aws-cdk-lib": "2.235.0",
+    "aws-cdk-lib": "2.243.0",
     "aws-lambda": "^1.0.7",
     "cdk-nag": "^2.37.55",
     "constructs": "^10.4.5",
-    "undici": "^7.18.2"
+    "undici": "^7.24.0"
   }
 }
